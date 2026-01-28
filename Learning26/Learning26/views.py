@@ -6,3 +6,8 @@ def aboutUs(request):
     return render(request,"Aboutus.html")
 def contactUs(request):
     return render(request,"contactus.html")
+def recipe(request):
+    ingrediants =['Tomato','Masala','Noodles']
+    data={'name':"Maggie",'ingrediants':ingrediants, 'Time':2}
+
+    return render(request,"recipe.html",data)
