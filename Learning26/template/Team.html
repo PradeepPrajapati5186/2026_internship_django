@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My First Webpage</title>
+</head>
+
+<body>
+<h1>Team</h1>
+<h2>Team:{{teamName}}</h2>
+<h3>Captain:{{Captain}}
+    {% for i in Squad %}
+        <p>{{i}}</p>
+    {% endfor %}
+
+<p>
+    {% if trophies <= 5 %}
+        Successfull IPL Team
+    {% else %}
+        Wining is hard for this team
+    {% endif %}
+</p>
+</h3>
+</body>
+</html>
