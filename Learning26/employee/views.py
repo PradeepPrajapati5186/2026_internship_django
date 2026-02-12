@@ -1,5 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render,HttpResponse
 from . models import Employee
+from . forms import EmployeeForm,CourseForm,DepartmentForm,ProjectForm
+
 def employeeDashboard(request):
     employees = Employee.objects.all().values()
     print(employees)
@@ -69,3 +71,39 @@ def employeefilter(request):
     print("query 16",employee16) 
     print("query 17",employee17) 
     return render(request,'employee/employeefilter.html')
+
+def createEmployeewithform(request):
+    if request.method == 'POST':
+        form = EmployeeForm(request.POST)
+        form.save()
+        return HttpResponse("Employee created")
+    else:
+        form = EmployeeForm()
+        return render(request,'employee/createEmployeewithform.html',{'form':form})
+    
+def createCoursewithform(request):
+    if request.method == 'POST':
+        form = CourseForm(request.POST)
+        form.save()
+        return HttpResponse("Course created")
+    else:
+        form = CourseForm()
+        return render(request,'employee/createCoursewithform.html',{'form':form})
+    
+def createProjectwithform(request):
+    if request.method == 'POST':
+        form = ProjectForm(request.POST)
+        form.save()
+        return HttpResponse("Project created")
+    else:
+        form = ProjectForm()
+        return render(request,'employee/createProjectwithform.html',{'form':form})
+
+def createDepartmentwithform(request):
+    if request.method == 'POST':
+        form = DepartmentForm(request.POST)
+        form.save()
+        return HttpResponse("Department created")
+    else:
+        form = DepartmentForm()
+        return render(request,'employee/createDepartmentwithform.html',{'form':form})
