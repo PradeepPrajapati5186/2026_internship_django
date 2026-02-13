@@ -1,4 +1,4 @@
-from django.shortcuts import render,HttpResponse
+from django.shortcuts import render,HttpResponse,redirect
 from . models import Employee
 from . forms import EmployeeForm,CourseForm,DepartmentForm,ProjectForm
 
@@ -9,50 +9,36 @@ def employeeDashboard(request):
 
 
 def employeefilter(request):
-    #where select  from employee where name = "raj"
-    employee = Employee.objects.filter(name ="raj").values()
-    #selet  from employee where post = "Developer"
-    employee2 = Employee.objects.filter(post ="Developer").values()
-    #select  from employee where name = "raj" and post = "Developer"
+   
+    employee = Employee.objects.filter(name ="raj").values()   
+    employee2 = Employee.objects.filter(post ="Developer").values()   
     employee3 = Employee.objects.filter(name ="raja",post ="Developer").values()
-    #select  from employee where name = "raj" or post = "Developer"
-
-    #>23
-    #seelct  from employee where age > 23
-    #employee4 = Employee.objects.filter(age>23).values()
     employee4 = Employee.objects.filter(age__gt=23).values()
     employee5 = Employee.objects.filter(age__gte=23).values()
 
-    #lt , lte
-
-    #string queries
     employee6 = Employee.objects.filter(post__exact="Developer").values()
     employee7 = Employee.objects.filter(post__iexact="developer").values()
-    #contains
     employee8 = Employee.objects.filter(name__contains="r").values()
     employee9 = Employee.objects.filter(name__icontains="R").values()
 
-    #startswith endswith
     employee10 = Employee.objects.filter(name__startswith="R").values()
     employee11 = Employee.objects.filter(name__endswith="R").values()
     employee12 = Employee.objects.filter(name__istartswith="R").values()
     employee13 = Employee.objects.filter(name__iendswith="R").values()
 
-    #in
+ 
     employee14 = Employee.objects.filter(name__in=["raj","jay"]).values()    
 
-    #range
     employee15 = Employee.objects.filter(age__range=[24,30]).values()    
 
-    #order by
-    employee16 = Employee.objects.order_by("age").values()     #asc
-    employee17 = Employee.objects.order_by("-age").values()    #desc
+    employee16 = Employee.objects.order_by("age").values()     
+    employee17 = Employee.objects.order_by("-age").values()  
 
-    employee18 = Employee.objects.order_by("-salary").values()    #desc
+    employee18 = Employee.objects.order_by("-salary").values()    
 
     
 
-    #and
+ 
     print("query 1",employee)
     print("query 2",employee2)
     print("query 3",employee3)
@@ -107,3 +93,23 @@ def createDepartmentwithform(request):
     else:
         form = DepartmentForm()
         return render(request,'employee/createDepartmentwithform.html',{'form':form})
+    
+def deleteEmployee(request,id):
+    print("id from url = ",id)
+    Employee.objects.filter(id=id).delete()
+    return redirect("employeeList") #url --> name -->
+
+
+def filterEmployee(request):
+    print("filter employee called...")
+    employee = Employee.objects.filter(age__gte=20).values()
+    print("filter employees = ",employee)
+    return render(request,"employee/employeedashboard.html",{"employee":employee})
+
+def sortEmployee(request,id):
+    if id == 1:
+        employee = Employee.objects.order_by("age").values()
+        return render(request,"employee/employeedashboard.html",{"employee":employee})
+    elif id ==2:
+        employee = Employee.objects.order_by("-age").values()
+        return render(request,"employee/employeedashboard.html",{"employee":employee})
