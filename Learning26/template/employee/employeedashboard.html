@@ -1,3 +1,5 @@
+{% extends 'base.html' %}
+{% block content %}
 <h1>Employee List</h1>
 <a href="{% url 'createEmployeeWithForm'%}">CREATE EMPLOYEE<a/>
 <a href ="{% url 'filterEmployee' %}">FILTER</a> 
@@ -25,8 +27,10 @@
             <td>{{emp.post}}</td>
             <td>
                 <a href = "{% url 'deleteEmployee' emp.id %}">DELETE</a>
+                <a href="{% url 'updateEmployee' emp.id %}">update</a>
             </td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
+{% endblock content %}

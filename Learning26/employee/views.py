@@ -62,7 +62,7 @@ def createEmployeewithform(request):
     if request.method == 'POST':
         form = EmployeeForm(request.POST)
         form.save()
-        return HttpResponse("Employee created")
+        return redirect("employeeList")
     else:
         form = EmployeeForm()
         return render(request,'employee/createEmployeewithform.html',{'form':form})
@@ -113,3 +113,14 @@ def sortEmployee(request,id):
     elif id ==2:
         employee = Employee.objects.order_by("-age").values()
         return render(request,"employee/employeedashboard.html",{"employee":employee})
+    
+def updateEmployee(request,id):
+    employee = Employee.objects.get(id=id)
+    
+    if request.method == "POST":
+        form = EmployeeForm(request.POST,instance=employee)
+        form.save()
+        return redirect("employeeList")
+    else:
+        form = EmployeeForm(instance=employee)    
+        return render(request,"employee/updateEmployee.html",{"form":form})

@@ -28,6 +28,7 @@ urlpatterns = [
     path('player/',views.player),
 
     path('student/',include("student.urls")),
-    path('employee/',include("employee.urls"))
+    path('employee/',include("employee.urls")),
+    path('Service/',include('Services.urls'))
 
 ]
